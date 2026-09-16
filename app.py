@@ -70,18 +70,18 @@ st.markdown("""
 with st.sidebar:
     st.markdown("### ⚙️ Settings")
     company_name = st.text_input("Practice / Company Name", value="Your Practice")
-    api_key = st.text_input("Anthropic API Key", type="password",
-                            value=st.session_state.get("api_key", os.getenv("ANTHROPIC_API_KEY", "")),
-                            help="Get yours at console.anthropic.com")
+    api_key = st.text_input("OpenRouter API Key (free)", type="password",
+                            value=st.session_state.get("api_key", os.getenv("OPENROUTER_API_KEY", "")),
+                            help="Free at openrouter.ai/keys — uses free model deepseek-v3.1:free by default")
     if api_key:
         # Per-session only — never write to os.environ (leaks across users on shared Streamlit)
         st.session_state["api_key"] = api_key
 
     st.markdown("---")
     st.warning(
-        "⚠️ **HIPAA notice:** This app sends denial data to Anthropic's API. "
-        "Ensure you have a signed BAA with Anthropic before uploading real PHI. "
-        "Sample data is safe. Patient IDs are never sent in prompts."
+        "⚠️ **HIPAA notice:** This app sends denial data to a third-party LLM API (OpenRouter → free models). "
+        "Do **not** upload real PHI without a BAA with the LLM provider. "
+        "Use sample or de-identified data. Patient IDs are never sent in prompts."
     )
     phi_consent = st.checkbox("I confirm BAA is in place (or I'm using de-identified/sample data)",
                               value=st.session_state.get("phi_consent", False))

@@ -2,14 +2,16 @@ import os
 import json
 import logging
 import re
-import anthropic
 import pandas as pd
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 log = logging.getLogger(__name__)
 
-MODEL_ID = "claude-sonnet-4-5"
+# OpenRouter (free tier) — swap MODEL_ID to any OpenRouter model
+OPENROUTER_BASE = "https://openrouter.ai/api/v1"
+MODEL_ID = os.getenv("LLM_MODEL", "deepseek/deepseek-chat-v3.1:free")
 REQUIRED_COLS = ["claim_id", "patient_id", "payer", "denial_code",
                  "denial_reason", "amount", "date", "procedure_code"]
 
@@ -29,10 +31,10 @@ def _sanitize(text: str) -> str:
 
 def analyze_denials(df: pd.DataFrame, api_key: str = None) -> dict:
     validate_columns(df)
-    key = api_key or os.getenv("ANTHROPIC_API_KEY")
+    key = api_key or os.getenv("OPENROUTER_API_KEY")
     if not key:
-        raise ValueError("Anthropic API key required")
-    client = anthropic.Anthropic(api_key=key)
+        raise ValueError("OpenRouter API key required")
+    client = OpenAI(api_key=key, base_url=OPENROUTER_BASE)
     denial_summary = (
         df.groupby("denial_code")
         .agg(
@@ -104,16 +106,18 @@ Return a JSON response with this exact structure:
 Be specific, actionable, and realistic. Use actual RCM best practices."""
 
     def _call():
-        return client.messages.create(
+        return client.chat.completions.create(
             model=MODEL_ID,
             max_tokens=2000,
             messages=[{"role": "user", "content": prompt}],
+            extra_headers={"HTTP-Referer": "https://github.com/hmzainjamil/rcm-denial-analyzer",
+                           "X-Title": "RCM Denial Analyzer"},
         )
 
     for attempt in range(2):
         try:
             response = _call()
-            text = response.content[0].text
+            text = response.choices[0].message.content or ""
             text = text.replace("```json", "").replace("```", "")
             start = text.find("{")
             end = text.rfind("}") + 1
