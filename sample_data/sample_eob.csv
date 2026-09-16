@@ -1,0 +1,51 @@
+claim_id,patient_id,payer,denial_code,denial_reason,amount,date,procedure_code,provider
+CLM001,PT001,BlueCross,CO-4,Claim filed after time limit,245.00,2026-01-15,99213,Dr. Smith
+CLM002,PT002,Aetna,CO-97,Payment adjusted because this procedure/service is not paid separately,180.50,2026-01-16,99213,Dr. Jones
+CLM003,PT003,United,CO-50,These are non-covered services because this is not deemed a medical necessity,320.00,2026-01-17,99215,Dr. Smith
+CLM004,PT004,BlueCross,CO-4,Claim filed after time limit,95.00,2026-01-18,99212,Dr. Lee
+CLM005,PT005,Cigna,PR-96,Non-covered charge(s),410.00,2026-01-19,99214,Dr. Jones
+CLM006,PT006,Aetna,CO-97,Duplicate claim,180.50,2026-01-20,99213,Dr. Smith
+CLM007,PT007,United,CO-4,Claim filed after time limit,155.00,2026-01-21,99212,Dr. Lee
+CLM008,PT008,BlueCross,CO-50,Not medically necessary,275.00,2026-01-22,99215,Dr. Jones
+CLM009,PT009,Cigna,CO-4,Claim filed after time limit,245.00,2026-01-23,99213,Dr. Smith
+CLM010,PT010,Aetna,CO-16,Claim lacks information,195.00,2026-01-24,99214,Dr. Lee
+CLM011,PT011,United,CO-97,Duplicate claim,320.00,2026-01-25,99215,Dr. Jones
+CLM012,PT012,BlueCross,PR-96,Non-covered service,88.00,2026-01-26,99211,Dr. Smith
+CLM013,PT013,Cigna,CO-50,Not medically necessary,410.00,2026-01-27,99215,Dr. Lee
+CLM014,PT014,Aetna,CO-4,Claim filed after time limit,245.00,2026-01-28,99213,Dr. Jones
+CLM015,PT015,United,CO-16,Missing information,175.00,2026-01-29,99212,Dr. Smith
+CLM016,PT016,BlueCross,CO-97,Duplicate claim,180.50,2026-01-30,99213,Dr. Lee
+CLM017,PT017,Cigna,CO-4,Claim filed after time limit,320.00,2026-01-31,99215,Dr. Jones
+CLM018,PT018,Aetna,CO-50,Not medically necessary,245.00,2026-02-01,99213,Dr. Smith
+CLM019,PT019,United,PR-96,Non-covered service,95.00,2026-02-02,99212,Dr. Lee
+CLM020,PT020,BlueCross,CO-4,Claim filed after time limit,410.00,2026-02-03,99215,Dr. Jones
+CLM021,PT021,Cigna,CO-97,Duplicate claim,155.00,2026-02-04,99212,Dr. Smith
+CLM022,PT022,Aetna,CO-16,Claim lacks information,275.00,2026-02-05,99214,Dr. Lee
+CLM023,PT023,United,CO-50,Not medically necessary,245.00,2026-02-06,99213,Dr. Jones
+CLM024,PT024,BlueCross,CO-4,Claim filed after time limit,180.50,2026-02-07,99213,Dr. Smith
+CLM025,PT025,Cigna,PR-96,Non-covered service,320.00,2026-02-08,99215,Dr. Lee
+CLM026,PT026,Aetna,CO-97,Duplicate claim,195.00,2026-02-09,99214,Dr. Jones
+CLM027,PT027,United,CO-4,Claim filed after time limit,88.00,2026-02-10,99211,Dr. Smith
+CLM028,PT028,BlueCross,CO-50,Not medically necessary,245.00,2026-02-11,99213,Dr. Lee
+CLM029,PT029,Cigna,CO-16,Missing information,155.00,2026-02-12,99212,Dr. Jones
+CLM030,PT030,Aetna,CO-4,Claim filed after time limit,410.00,2026-02-13,99215,Dr. Smith
+CLM031,PT031,United,CO-97,Duplicate claim,180.50,2026-02-14,99213,Dr. Lee
+CLM032,PT032,BlueCross,PR-96,Non-covered service,275.00,2026-02-15,99214,Dr. Jones
+CLM033,PT033,Cigna,CO-50,Not medically necessary,245.00,2026-02-16,99213,Dr. Smith
+CLM034,PT034,Aetna,CO-4,Claim filed after time limit,95.00,2026-02-17,99212,Dr. Lee
+CLM035,PT035,United,CO-16,Claim lacks information,320.00,2026-02-18,99215,Dr. Jones
+CLM036,PT036,BlueCross,CO-97,Duplicate claim,180.50,2026-02-19,99213,Dr. Smith
+CLM037,PT037,Cigna,CO-4,Claim filed after time limit,155.00,2026-02-20,99212,Dr. Lee
+CLM038,PT038,Aetna,CO-50,Not medically necessary,410.00,2026-02-21,99215,Dr. Jones
+CLM039,PT039,United,PR-96,Non-covered service,245.00,2026-02-22,99213,Dr. Smith
+CLM040,PT040,BlueCross,CO-4,Claim filed after time limit,175.00,2026-02-23,99212,Dr. Lee
+CLM041,PT041,Cigna,CO-16,Missing information,320.00,2026-02-24,99215,Dr. Jones
+CLM042,PT042,Aetna,CO-97,Duplicate claim,88.00,2026-02-25,99211,Dr. Smith
+CLM043,PT043,United,CO-4,Claim filed after time limit,245.00,2026-02-26,99213,Dr. Lee
+CLM044,PT044,BlueCross,CO-50,Not medically necessary,180.50,2026-02-27,99213,Dr. Jones
+CLM045,PT045,Cigna,PR-96,Non-covered service,195.00,2026-02-28,99214,Dr. Smith
+CLM046,PT046,Aetna,CO-4,Claim filed after time limit,275.00,2026-03-01,99214,Dr. Lee
+CLM047,PT047,United,CO-97,Duplicate claim,245.00,2026-03-02,99213,Dr. Jones
+CLM048,PT048,BlueCross,CO-16,Claim lacks information,155.00,2026-03-03,99212,Dr. Smith
+CLM049,PT049,Cigna,CO-4,Claim filed after time limit,410.00,2026-03-04,99215,Dr. Lee
+CLM050,PT050,Aetna,CO-50,Not medically necessary,320.00,2026-03-05,99215,Dr. Jones
