@@ -10,6 +10,11 @@ from email_drafter import draft_appeal_emails, generate_ai_appeal
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("rcm")
 
+def _audit_log(event: str, detail: str = ""):
+    """Write HIPAA-style audit event to log."""
+    log.info("AUDIT event=%s detail=%s session=%s",
+             event, detail, st.session_state.get("_session_id", "unknown"))
+
 MAX_UPLOAD_MB = 10
 MAX_AI_EMAIL_ROWS = 25
 
@@ -18,6 +23,12 @@ st.set_page_config(
     page_icon="🏥",
     layout="wide",
 )
+
+# Assign session ID for audit trail
+import uuid
+if "_session_id" not in st.session_state:
+    st.session_state["_session_id"] = str(uuid.uuid4())[:8]
+    _audit_log("session_start")
 
 # ── MOTION-UI (pure CSS, respects prefers-reduced-motion) ────────
 MOTION_CSS = """
@@ -79,11 +90,13 @@ with st.sidebar:
 
     st.markdown("---")
     st.info(
-        "🔒 **Data Privacy:** AI analysis uses a third-party LLM API. "
-        "For production use, ensure a BAA is in place with your LLM provider. "
-        "Patient IDs are automatically excluded from AI prompts."
+        "🔒 **Data Handling Notice:** "
+        "Uploaded data is processed in-memory only and never stored. "
+        "AI analysis uses OpenRouter (third-party LLM API) — patient IDs are excluded from all prompts. "
+        "For production PHI use, a BAA with OpenRouter and Streamlit is required. "
+        "This tool is designed for de-identified or sample data."
     )
-    phi_consent = st.checkbox("I acknowledge the data privacy notice above",
+    phi_consent = st.checkbox("I acknowledge the data handling notice above",
                               value=st.session_state.get("phi_consent", False))
     st.session_state["phi_consent"] = phi_consent
 
@@ -142,6 +155,7 @@ with tab1:
                 df = pd.read_csv(uploaded) if uploaded.name.lower().endswith(".csv") else pd.read_excel(uploaded)
                 st.success(f"✅ Loaded {len(df)} claims from {uploaded.name}")
                 log.info("upload rows=%d name=%s", len(df), uploaded.name)
+                _audit_log("file_upload", f"rows={len(df)}")
             except Exception as e:
                 st.error(f"Error reading file: {e}")
 
@@ -191,13 +205,16 @@ with tab1:
             st.info("🔒 Please acknowledge the data privacy notice in the sidebar to enable AI analysis.")
         else:
             if st.button("🤖 Run AI Denial Analysis", type="primary", use_container_width=True):
-                with st.spinner("Analyzing denial patterns with Claude AI..."):
+                with st.spinner("Analyzing denial patterns with AI..."):
                     try:
+                        _audit_log("ai_analysis_start", f"rows={len(df)}")
                         analysis = analyze_denials(df, api_key=session_key)
                         st.session_state["analysis"] = analysis
+                        _audit_log("ai_analysis_complete")
                         st.success("✅ Analysis complete!")
                     except Exception as e:
                         log.exception("analyze_denials failed")
+                        _audit_log("ai_analysis_error", str(e)[:80])
                         st.error(f"Analysis error: {e}")
 
             if "analysis" in st.session_state:
