@@ -78,12 +78,12 @@ with st.sidebar:
         st.session_state["api_key"] = api_key
 
     st.markdown("---")
-    st.warning(
-        "⚠️ **HIPAA notice:** This app sends denial data to a third-party LLM API (OpenRouter → free models). "
-        "Do **not** upload real PHI without a BAA with the LLM provider. "
-        "Use sample or de-identified data. Patient IDs are never sent in prompts."
+    st.info(
+        "🔒 **Data Privacy:** AI analysis uses a third-party LLM API. "
+        "For production use, ensure a BAA is in place with your LLM provider. "
+        "Patient IDs are automatically excluded from AI prompts."
     )
-    phi_consent = st.checkbox("I confirm BAA is in place (or I'm using de-identified/sample data)",
+    phi_consent = st.checkbox("I acknowledge the data privacy notice above",
                               value=st.session_state.get("phi_consent", False))
     st.session_state["phi_consent"] = phi_consent
 
@@ -186,9 +186,9 @@ with tab1:
         # AI Analysis
         session_key = st.session_state.get("api_key", "")
         if not session_key:
-            st.warning("⚠️ Add your Anthropic API key in the sidebar to run AI analysis.")
+            st.info("🔑 Add your OpenRouter API key in the sidebar to run AI analysis.")
         elif not st.session_state.get("phi_consent"):
-            st.warning("⚠️ Confirm HIPAA/BAA notice in sidebar before running AI analysis.")
+            st.info("🔒 Please acknowledge the data privacy notice in the sidebar to enable AI analysis.")
         else:
             if st.button("🤖 Run AI Denial Analysis", type="primary", use_container_width=True):
                 with st.spinner("Analyzing denial patterns with Claude AI..."):
@@ -258,9 +258,9 @@ with tab2:
             session_key = st.session_state.get("api_key", "")
             with st.spinner("Drafting appeal emails..."):
                 if use_ai and not session_key:
-                    st.warning("⚠️ Add Anthropic API key in sidebar for AI mode.")
+                    st.info("🔑 Add OpenRouter API key in sidebar for AI mode.")
                 elif use_ai and not st.session_state.get("phi_consent"):
-                    st.warning("⚠️ Confirm HIPAA/BAA notice in sidebar for AI mode.")
+                    st.info("🔒 Acknowledge data privacy notice in sidebar for AI mode.")
                 elif use_ai:
                     if len(df) > MAX_AI_EMAIL_ROWS:
                         st.warning(f"AI mode capped at {MAX_AI_EMAIL_ROWS} rows (uploaded {len(df)}). Processing first {MAX_AI_EMAIL_ROWS}.")
