@@ -29,7 +29,7 @@ The repository includes `streamlit_app.py` and `app.py`; the canonical entry poi
 ## Data and security notes
 
 - The UI displays a notice and acknowledgment checkbox, but the checkbox is not proof of a provider contract or legal compliance.
-- The UI claims patient IDs are excluded from prompts. Source inspection contradicts that claim: appeal prompts include claim identifiers and other claim fields; analysis prompts include payer and denial text. See `analyzer.py` and `email_drafter.py`.
+- Current OpenRouter prompts omit `patient_id`. `analyzer.py` sends aggregate totals, denial codes/reasons, and payer values; `email_drafter.py` sends claim ID, payer, denial code/reason, amount, procedure, and date. Template-based appeal emails are generated locally and can include `patient_id`.
 - `_sanitize` removes a small set of instruction-like strings; it is not PHI de-identification or a reliable prompt-injection defense.
 - Uploads are parsed in the Streamlit process. The README's in-memory-only claim has not been verified against hosting, logs, crash reporting, or deployment behavior.
 - Application logs record upload row counts and filenames; error paths may also record exception details. Do not treat these logs as a validated audit trail.
